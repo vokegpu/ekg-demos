@@ -1,0 +1,19 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+	"build_systems":
+	[
+		{
+			"name": "Linux Build(s)",
+			"shell_cmd": "cd $folder && sh ./linux-builds.sh --build-only"
+		},
+		{
+			"name": "Linux Build(s) & Run",
+			"shell_cmd": "cd $folder && sh ./linux-builds.sh --run"
+		}
+	]
+}
