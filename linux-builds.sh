@@ -4,6 +4,8 @@ if [ -d "./GLFW" ]; then
   echo Building GLFW
   
   cd ./GLFW
+  rm -r ./cmake-build-debug
+
   cmake -S . -B ./cmake-build-debug -G Ninja
   cmake --build ./cmake-build-debug
 

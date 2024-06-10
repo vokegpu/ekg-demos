@@ -4,11 +4,20 @@
 #include <ekg/os/ekg_glfw.hpp>
 #include <ekg/ekg.hpp>
 
+static void window_size_callback(GLFWwindow* p_glfw_win, int width, int height) {
+  ekg::os::glfw_window_size_callback(width, height);
+}
+
 static void key_callback(GLFWwindow* p_glfw_win, int key, int scancode, int action, int mods) {
-  ekg::os::glfw_key_callback(key, scancode, action, mods);
+  //ekg::os::glfw_key_callback(key, scancode, action, mods);
+
+  std::cout << glfwGetKeyName(key, scancode) << std::endl;
+  if (key == GLFW_KEY_LEFT) {
+  }
 }
 
 static void character_callback(GLFWwindow* p_glfw_win, unsigned int codepoint) {
+  std::cout << codepoint << std::endl;
   ekg::os::glfw_char_callback(codepoint);
 }
 
@@ -25,11 +34,13 @@ static void scroll_callback(GLFWwindow* p_glfw_win, double dx, double dy) {
 }
 
 int32_t main(int32_t, char**) {
-  glfwInit();
+  if (!glfwInit()) {
+    std::cout << "MUUUUUUUUUUUUUUUUUU" << std::endl;
+  }
 
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
 
   GLFWwindow *p_glfw_win {
     glfwCreateWindow(
@@ -63,22 +74,33 @@ int32_t main(int32_t, char**) {
   glfwSetCursorPosCallback(p_glfw_win, cursor_position_callback);
   glfwSetMouseButtonCallback(p_glfw_win, mouse_button_callback);
   glfwSetScrollCallback(p_glfw_win, scroll_callback);
+  glfwSetWindowSizeCallback(p_glfw_win, window_size_callback);
+  glfwSwapInterval(1);
 
-  ekg::frame("meow oi amo vc", {20, 20}, {400, 400})
+  ekg::frame("meow oi amo vc", {20, 20}, {400, 200})
     ->set_drag(ekg::dock::top)
     ->set_resize(ekg::dock::left | ekg::dock::bottom | ekg::dock::right);
 
-  ekg::frame("meow oi amo vc", {20, 400}, {400, 400})
-    ->set_drag(ekg::dock::top)
-    ->set_resize(ekg::dock::left | ekg::dock::bottom | ekg::dock::right);
+  ekg::label("meow1", ekg::dock::fill);
+  ekg::button("testing button because we", ekg::dock::fill | ekg::dock::next);
+
+  ekg::textbox("meow1", "oi eu amo gato frajola fofa perfeita eu quero casar", ekg::dock::fill | ekg::dock::next)
+  ->set_scaled_height(4);
+
+  ekg::pop_group();
 
   while (!glfwWindowShouldClose(p_glfw_win)) {
     ekg::update();
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     glClearColor(0.143243f, 0.2f, 0.921721823f, 1.0f);
+    glViewport(0.0f, 0.0f, ekg::ui::width, ekg::ui::height);
 
-    ekg::ui::dt = 0.16f;
+    if (ekg::input::action("amovc")) {
+      std::cout << "Eu amo muito vc <3" << std::endl;
+    }
+
+    ekg::ui::dt = 0.016f;
     ekg::render();
 
     glfwSwapBuffers(p_glfw_win);
