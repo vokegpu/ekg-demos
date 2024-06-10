@@ -9,15 +9,10 @@ static void window_size_callback(GLFWwindow* p_glfw_win, int width, int height) 
 }
 
 static void key_callback(GLFWwindow* p_glfw_win, int key, int scancode, int action, int mods) {
-  //ekg::os::glfw_key_callback(key, scancode, action, mods);
-
-  std::cout << glfwGetKeyName(key, scancode) << std::endl;
-  if (key == GLFW_KEY_LEFT) {
-  }
+  ekg::os::glfw_key_callback(key, scancode, action, mods);
 }
 
 static void character_callback(GLFWwindow* p_glfw_win, unsigned int codepoint) {
-  std::cout << codepoint << std::endl;
   ekg::os::glfw_char_callback(codepoint);
 }
 
@@ -88,6 +83,8 @@ int32_t main(int32_t, char**) {
   ->set_scaled_height(4);
 
   ekg::pop_group();
+
+  ekg::input::bind("amovc", "a");
 
   while (!glfwWindowShouldClose(p_glfw_win)) {
     ekg::update();
