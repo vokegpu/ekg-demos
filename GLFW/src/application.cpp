@@ -41,7 +41,7 @@ int32_t main(int32_t, char**) {
     glfwCreateWindow(
       1280,
       720,
-      "EKG-GLFW demo",
+      "EKG-GLFW3 demo",
       nullptr,
       nullptr
     )
@@ -62,8 +62,6 @@ int32_t main(int32_t, char**) {
   ekg::runtime ekg_runtime {};
   ekg::init(&ekg_runtime, &ekg_property);
 
-  ekg::theme().gen_default_dark_theme();
-
   glfwSetKeyCallback(p_glfw_win, key_callback);
   glfwSetCharCallback(p_glfw_win, character_callback);
   glfwSetCursorPosCallback(p_glfw_win, cursor_position_callback);
@@ -76,11 +74,13 @@ int32_t main(int32_t, char**) {
     ->set_drag(ekg::dock::top)
     ->set_resize(ekg::dock::left | ekg::dock::bottom | ekg::dock::right);
 
-  ekg::label("meow1", ekg::dock::fill);
+  ekg::label("working on GLFW3", ekg::dock::fill | ekg::dock::next);
+  ekg::label("very cool...", ekg::dock::fill | ekg::dock::next);
+  ekg::label("meow", ekg::dock::fill | ekg::dock::next);
   ekg::button("testing button because we", ekg::dock::fill | ekg::dock::next);
 
   ekg::textbox("meow1", "oi eu amo gato frajola fofa perfeita eu quero casar", ekg::dock::fill | ekg::dock::next)
-  ->set_scaled_height(4);
+    ->set_scaled_height(4);
 
   ekg::pop_group();
 
