@@ -9,11 +9,12 @@ if [ -d "./GLFW" ]; then
   cmake -S . -B ./cmake-build-debug -G Ninja
   cmake --build ./cmake-build-debug
 
-  if [ $1 = "--run" ]; then
+  if [ "$1" = "--run" ]; then
     cd ../bin/
     ./ekg_glfw_demo
     cd ../
   fi
+  cd ../
 fi
 
 if [ -d "./SDL" ]; then
@@ -25,12 +26,13 @@ if [ -d "./SDL" ]; then
   cmake -S . -B ./cmake-build-debug -G Ninja
   cmake --build ./cmake-build-debug
 
-  if [ $1 = "--run" ]; then
+  if [ "$1" = "--run" ]; then
     cd ../bin/
     ./ekg_sdl_demo
     cd ../
   fi
+  cd ../
 fi
 
 echo End of building section
-echo Bye ;3
+echo Bye ;
